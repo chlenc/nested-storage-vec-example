@@ -15,8 +15,7 @@ impl MyContract for Contract {
     #[storage(read, write)]
     fn test_function(n: u64) {
         let address = msg_sender_address();
-
-        let mut v = storage.v.get(address).read();
+        let mut v = storage.v.get(address).try_read().unwrap_or(StorageVec{});
         v.push(n);
         storage.v.insert(address, v);
     }
